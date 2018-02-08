@@ -48,7 +48,7 @@ SAMY - v1
 
 ## Authors
 
-* **Denis Angell** - *Initial work* - [harpangell7](https://github.com/Harpangell7)
+* **Denis Angell** - *Initial work* - [dangell7](https://github.com/dangell7)
 
 ## Contributors
 
