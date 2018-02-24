@@ -1,18 +1,17 @@
 # SAMY Public Repository
 
-
-##Limited Offer!!! $100 bounty for finding errors in smart contracts.
-
-### Eligible Contracts
-
-* [SMY Token Contract]
-* [SMY Crowdsale]
-
 The public repository for SAMY. To view the application visit https://iamsamy.com. If you would like to contribute to this project please email denisangell@iamsamy.com.
 
 SMY Token Ether Scan https://ropsten.etherscan.io/token/0x21c64552ec487bc3117562c96f306bb9f77a9dd3
 
 Crowdsale Ether Scan: https://ropsten.etherscan.io/address/0xc814f6AEc6769cB4DE212600Ed6C6F33cA8C85D4
+
+## Limited Offer!!! $100 bounty for finding errors in smart contracts.
+
+### Eligible Contracts
+
+* [SMY Token Contract]
+* [SMY Crowdsale]
 
 ## Services
 
@@ -42,6 +41,7 @@ The guides for each of the above services can be found in the resources section 
 
 * [Ubuntu](https://www.ubuntu.com/) - 16.0.4 - The OS
 * [React](https://www.react.com/) - 15. - The frontend web "framework" used
+* [Flask](https://www.flask.pocoo.org/) - 0.12.2 - Python Microframework
 * [Python](https://www.python.org/download/releases/3.5.1/) - 3.5.1 - Programing Language
 * [Firebase](https://firebase.google.com/) - 4.6 - Realtime Database
 * [Firestore](https://firebase.google.com/docs/firestore/) - 4.6 - Realtime Big Data Database
