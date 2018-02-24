@@ -1,6 +1,14 @@
 # SAMY Public Repository
 
+Dear Viewers,
+
 The public repository for SAMY. To view the application visit https://iamsamy.com. If you would like to contribute to this project please email support@iamsamy.com.
+
+The code for implementation of DAPP services will be uploaded as they are added to the fiat platform. Currently development is in testing using a "samynet" test blockchain. After proper testing and the release into the beta, the proper documentation of the wallet, the signing, and implementation of smart contracts and any other procedures that involves the transfer of ether/SMY will be added here. To protect the privacy of the fiat users and to abide by the merchant terms of service, the executives have agreed that the implementation of the merchant/fiat processes will not be documented here at this time. If you have any questions regarding this information. Please email support@iamsamy.com.
+
+Sincerely, 
+Denis Angell
+CEO
 
 SMY Token Ether Scan: https://ropsten.etherscan.io/token/0x21c64552ec487bc3117562c96f306bb9f77a9dd3
 
