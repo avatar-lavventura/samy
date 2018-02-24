@@ -21,9 +21,15 @@ contract BasicToken is ERC20Basic, Ownable {
     uint256 public sellPrice;
     uint256 public buyPrice;
     bool public isActive = false;
+    bool public isTradable = false;
 
     modifier isRunning {
         assert(isActive);
+        _;
+    }
+
+    modifier isExchange {
+        assert(isTradable);
         _;
     }
 
@@ -93,17 +99,7 @@ contract BasicToken is ERC20Basic, Ownable {
     }
 
     /**
-    * @dev Sets Buy and Sell Prices
-    * @param newSellPrice The Sell Price
-    * @param newBuyPrice The Buy Price
-    */
-    function setPrices(uint256 newSellPrice, uint256 newBuyPrice) onlyOwner public {
-        sellPrice = newSellPrice;
-        buyPrice = newBuyPrice;
-    }
-
-    /**
-    * @dev Sets Buy and Sell Prices
+    * @dev Transfers SMY
     * @param _from From Address
     * @param _to To Address
     * @param _value Value
@@ -115,6 +111,16 @@ contract BasicToken is ERC20Basic, Ownable {
         balances[_from] = balances[_from].sub(_value);
         balances[_to] = balances[_to].add(_value);
         Transfer(_from, _to, _value);
+    }
+
+    /**
+    * @dev Freeze Specific Account
+    * @param target Target Freeze Address
+    * @param freeze Bool True or False
+    */
+    function freezeAccount(address target, bool freeze) onlyOwner public {
+        frozenAccount[target] = freeze;
+        FrozenFunds(target, freeze);
     }
 
     /**
@@ -132,19 +138,33 @@ contract BasicToken is ERC20Basic, Ownable {
     }
 
     /**
-    * @dev Freeze Specific Account
-    * @param target Target Freeze Address
-    * @param freeze Bool True or False
+    * @dev Sets Buy and Sell Prices
+    * @param newSellPrice The Sell Price
+    * @param newBuyPrice The Buy Price
     */
-    function freezeAccount(address target, bool freeze) onlyOwner public {
-        frozenAccount[target] = freeze;
-        FrozenFunds(target, freeze);
+    function setPrices(uint256 newSellPrice, uint256 newBuyPrice) onlyOwner public {
+        sellPrice = newSellPrice;
+        buyPrice = newBuyPrice;
+    }
+
+    /**
+    * @dev Denys All Buy/Sell
+    */
+    function closeExchange() onlyOwner public {
+        isTradable = false;
+    }
+
+    /**
+    * @dev Allows All Buy/Sell
+    */
+    function openExchange() onlyOwner public {
+        isTradable = true;
     }
 
     /**
     * @dev Buys Tokens from contract in ether
     */
-    function () isRunning validAddress external payable {
+    function () isExchange validAddress external payable {
         uint256 amount = msg.value;
         amount = amount.div(buyPrice);
         amount = amount.mul(10**18);
@@ -156,7 +176,7 @@ contract BasicToken is ERC20Basic, Ownable {
     * @dev Sells Ether from contract in Token
     * @param amount The amount of tokens to be sold
     */
-    function sell(uint256 amount) isRunning validAddress public {
+    function sell(uint256 amount) isExchange validAddress public {
         require(this.balance >= amount.mul(sellPrice));
         _transfer(msg.sender, this, amount);
         msg.sender.transfer(amount.mul(sellPrice));

@@ -33,12 +33,12 @@ def deploy_founders(owner_address=None, owner_key=None, founders=None):
                 _beneficiary = founder['address']
                 _start = int(time.time())
                 _cliff = int(60)
-                _duration = int(120)
+                _duration = int(63072000) # 2 Years in seconds
                 _revocable = True
 
-                gas_price = w3.eth.gasPrice
+                gas_price = w3.eth.gasPrice * 2
                 block = w3.eth.getBlock("latest")
-                gas_limit = block["gasLimit"]
+                gas_limit = block["gasLimit"] - 30000
 
                 nonce = w3.eth.getTransactionCount(owner_address)
 
@@ -46,7 +46,8 @@ def deploy_founders(owner_address=None, owner_key=None, founders=None):
                     'nonce': nonce,
                     'gasPrice': gas_price,
                     'gas': gas_limit,
-                    'chainId': None
+                    #'chainId': None
+                    'chainId': 3
                 }
 
 
@@ -62,16 +63,17 @@ def deploy_founders(owner_address=None, owner_key=None, founders=None):
                 tx_hex = Web3.toHex(signed.rawTransaction)
 
                 tx_hash = w3.eth.sendRawTransaction(tx_hex)
-
+                print(Web3.toHex(tx_hash))
+                startTime = time.time()
                 while w3.eth.getTransactionReceipt(tx_hash) == None:
                     time.sleep(5)
                     print('Waiting on Tranasaction')
-
                 tx_receipt = w3.eth.getTransactionReceipt(tx_hash)
 
                 contract_address = tx_receipt['contractAddress']
 
                 print('Founder {} Contract Address: {}'.format(founder['name'], contract_address))
+                print('Elapsed Time: %s' % (int(time.time()) - int(startTime)))
 
                 data = {
                     'name': '%s' % founder['name'],
@@ -104,15 +106,15 @@ def fund_founders(smy_token_address=None, owner_address=None, owner_key=None, fo
 
             print('Funding Founder %s' % founder['name'])
 
-            _amount = int(_initialSupply * .05)
+            _amount = int(_initialSupply * .05) # 5% to founders
             _amount = Web3.toWei(_amount, 'ether')
-            _amount = int(_amount / 3)
+            _amount = int(_amount / 3) # 33% to each founder
 
             samy_contract_instance = w3.eth.contract(smy_token_address, abi=samy_contract_interface['abi'])
 
-            gas_price = w3.eth.gasPrice
+            gas_price = w3.eth.gasPrice * 2
             block = w3.eth.getBlock("latest")
-            gas_limit = block["gasLimit"]
+            gas_limit = block["gasLimit"] - 30000
 
             nonce = w3.eth.getTransactionCount(owner_address)
 
@@ -120,7 +122,8 @@ def fund_founders(smy_token_address=None, owner_address=None, owner_key=None, fo
                 'nonce': nonce,
                 'gasPrice': gas_price,
                 'gas': gas_limit,
-                'chainId': None
+                #'chainId': None
+                'chainId': 3
             }
 
             transaction = samy_contract_instance.functions.transfer(founder['address'], _amount).buildTransaction(built_transaction)
@@ -130,12 +133,15 @@ def fund_founders(smy_token_address=None, owner_address=None, owner_key=None, fo
             tx_hex = Web3.toHex(signed.rawTransaction)
 
             tx_hash = w3.eth.sendRawTransaction(tx_hex)
-
+            print(Web3.toHex(tx_hash))
+            startTime = time.time()
             while w3.eth.getTransactionReceipt(tx_hash) == None:
                 time.sleep(5)
                 print('Waiting on Tranasaction')
 
             tx_receipt = w3.eth.getTransactionReceipt(tx_hash)
+            print(tx_receipt)
+            print('Elapsed Time: %s' % (int(time.time()) - int(startTime)))
 
 
         except Exception as e:
@@ -150,6 +156,7 @@ def fund_founders(smy_token_address=None, owner_address=None, owner_key=None, fo
 def check_founders(smy_token_address=None, founders=None):
 
     i = 0
+    isFundedList = []
     for founder in founders:
 
         samy_contract_instance = w3.eth.contract(smy_token_address, abi=samy_contract_interface['abi'])
@@ -169,13 +176,17 @@ def check_founders(smy_token_address=None, founders=None):
         print('Founder %s Contract Vesting Cliff Datetime: %s' % (founder['name'], cliff_date))
         print('Founder %s Contract Vesting End Datetime: %s' % (founder['name'], end_date))
 
-        balance = samy_contract_instance.functions.balanceOf(founder['address']).call()
-        balance = Web3.fromWei(balance, 'ether')
-        print('Founder %s Contract SMY Token Balance: %s' % (founder['name'], balance))
+        smyBalance = samy_contract_instance.functions.balanceOf(founder['address']).call()
+        smyBalance = Web3.fromWei(smyBalance, 'ether')
+        print('Founder %s Contract SMY Token Balance: %s' % (founder['name'], smyBalance))
 
-        balance = founder_contract_instance.functions.releasableAmount(smy_token_address).call()
-        balance = Web3.fromWei(balance, 'ether')
-        print('Founder %s Contract Releaseable Amount: %s' % (founder['name'], balance))
+        ethBalance = founder_contract_instance.functions.releasableAmount(smy_token_address).call()
+        ethBalance = Web3.fromWei(ethBalance, 'ether')
+        print('Founder %s Contract Releaseable Amount: %s' % (founder['name'], ethBalance))
+
+        if smyBalance == 0:
+            return False
+
 
 
 
@@ -195,9 +206,9 @@ def release_founders(smy_token_address=None, owner_address=None, owner_key=None,
 
             founder_contract_instance = w3.eth.contract(founder['address'], abi=founder_contract_interface['abi'])
 
-            gas_price = w3.eth.gasPrice
+            gas_price = w3.eth.gasPrice * 2
             block = w3.eth.getBlock("latest")
-            gas_limit = block["gasLimit"]
+            gas_limit = block["gasLimit"] - 30000
 
             nonce = w3.eth.getTransactionCount(owner_address)
 
@@ -205,7 +216,8 @@ def release_founders(smy_token_address=None, owner_address=None, owner_key=None,
                 'nonce': nonce,
                 'gasPrice': gas_price,
                 'gas': gas_limit,
-                'chainId': None
+                #'chainId': None
+                'chainId': 3
             }
 
             transaction = founder_contract_instance.functions.release(smy_token_address).buildTransaction(built_transaction)
@@ -215,14 +227,15 @@ def release_founders(smy_token_address=None, owner_address=None, owner_key=None,
             tx_hex = Web3.toHex(signed.rawTransaction)
 
             tx_hash = w3.eth.sendRawTransaction(tx_hex)
-
+            print(Web3.toHex(tx_hash))
+            startTime = time.time()
             while w3.eth.getTransactionReceipt(tx_hash) == None:
                 time.sleep(5)
                 print('Waiting on Tranasaction')
 
             tx_receipt = w3.eth.getTransactionReceipt(tx_hash)
-
             print('Founder %s funds released; %s' % (founder['name'], tx_receipt))
+            print('Elapsed Time: %s' % (int(time.time()) - int(startTime)))
 
         except Exception as e:
             print(e)
@@ -243,9 +256,9 @@ def revoke_founders(smy_token_address=None, owner_address=None, owner_key=None, 
 
             founder_contract_instance = w3.eth.contract(founder['address'], abi=founder_contract_interface['abi'])
 
-            gas_price = w3.eth.gasPrice
+            gas_price = w3.eth.gasPrice * 2
             block = w3.eth.getBlock("latest")
-            gas_limit = block["gasLimit"]
+            gas_limit = block["gasLimit"] - 30000
 
             nonce = w3.eth.getTransactionCount(owner_address)
 
@@ -253,7 +266,8 @@ def revoke_founders(smy_token_address=None, owner_address=None, owner_key=None, 
                 'nonce': nonce,
                 'gasPrice': gas_price,
                 'gas': gas_limit,
-                'chainId': None
+                #'chainId': None
+                'chainId': 3
             }
 
             transaction = founder_contract_instance.functions.revoke(smy_token_address).buildTransaction(
@@ -264,7 +278,8 @@ def revoke_founders(smy_token_address=None, owner_address=None, owner_key=None, 
             tx_hex = Web3.toHex(signed.rawTransaction)
 
             tx_hash = w3.eth.sendRawTransaction(tx_hex)
-
+            print(Web3.toHex(tx_hash))
+            startTime = time.time()
             while w3.eth.getTransactionReceipt(tx_hash) == None:
                 time.sleep(5)
                 print('Waiting on Tranasaction')
@@ -272,6 +287,7 @@ def revoke_founders(smy_token_address=None, owner_address=None, owner_key=None, 
             tx_receipt = w3.eth.getTransactionReceipt(tx_hash)
 
             print('Founder %s funds revoked' % founder['name'])
+            print('Elapsed Time: %s' % (int(time.time()) - int(startTime)))
 
         except Exception as e:
             print(e)

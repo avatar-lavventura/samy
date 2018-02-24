@@ -1,16 +1,18 @@
 # SAMY Public Repository
 
-Dear Viewers,
 
+##Limited Offer!!! $100 bounty for finding errors in smart contracts.
 
-This is the public repository for the SAMY. A Hybrid Decentralized Application. To view the application visit https://iamsamy.com. If you would like to contribute to this project please email support@iamsamy.com. 
+### Eligible Contracts
 
-The code for implementation of DAPP services will be uploaded as they are added to the fiat platform. Currently development is in testing using a "samynet" test blockchain. After proper testing and the release into the beta, the proper documentation of the wallet, the signing, and implementation of smart contracts and any other procedures that involves the transfer of ether/SMY will be added here. To protect the privacy of the fiat users and to abide by the merchant terms of service, the executives have agreed that the implementation of the merchant/fiat processes will not be documented here at this time. If you have any questions regarding this information. Please email support@iamsamy.com.
+* [SMY Token Contract]
+* [SMY Crowdsale]
 
-Sincerely,
+The public repository for SAMY. To view the application visit https://iamsamy.com. If you would like to contribute to this project please email denisangell@iamsamy.com.
 
-Denis Angell
-CEO
+SMY Token Ether Scan https://ropsten.etherscan.io/token/0x21c64552ec487bc3117562c96f306bb9f77a9dd3
+
+Crowdsale Ether Scan: https://ropsten.etherscan.io/address/0xc814f6AEc6769cB4DE212600Ed6C6F33cA8C85D4
 
 ## Services
 
@@ -22,29 +24,29 @@ SamyCampaigns is our free service where Brands create opportunities for Ambassad
 
 ### SamyCreations - Current State: Beta
 
-SamyCreations is our free service where Brands create opportunities for Ambassadors to upload content that would reach out to the Brands audience. The content created is then purchased,  owned and licensed by the Brand. The Brands can then upload to their social media platform, or use the content for any marketing purposes other than with Samy. Brands use our unique opportunity creation process to target Ambassadors who align with their Brand mesSAMY. Samy measures each creation posted with analytics from the Brands own social media platform, as well as Google Analytics from the Brands website. With these metrics, we are able to provide the Brand with a more defined target audience and criteria to continue creating opportunities within the Samy platform. 
+SamyCreations is our free service where Brands create opportunities for Ambassadors to upload content that would reach out to the Brands audience. The content created is then purchased,  owned and licensed by the Brand. The Brands can then upload to their social media platform, or use the content for any marketing purposes other than with Samy. Brands use our unique opportunity creation process to target Ambassadors who align with their Brand mesSAMY. Samy measures each creation posted with analytics from the Brands own social media platform, as well as Google Analytics from the Brands website. With these metrics, we are able to provide the Brand with a more defined target audience and criteria to continue creating opportunities within the Samy platform.
 
 ### SamyGeo - Current State: Developement
 
-SamyGeo is our paid service where Brands create “instant” opportunities for Ambassadors to market the Brands products to their audience for an incentive or free product. The process looks something like; Brands would create a geolocation with a specified radius around that location. When an Ambassador entered the geolocation, they would receive an opportunity notification. Upon accepting the opportunity, Ambassadors receive the incentive or free product and are required to publish an instant post to their social media platform. SAMY has coined this term, Instant-Incentive for Post or II4P. SAMY measures the same analytics for SamyGeo as SamyCreations and SAMYCamapigns to proivde the Brands and Ambassadors feedback on their results. 
+SamyGeo is our paid service where Brands create “instant” opportunities for Ambassadors to market the Brands products to their audience for an incentive or free product. The process looks something like; Brands would create a geolocation with a specified radius around that location. When an Ambassador entered the geolocation, they would receive an opportunity notification. Upon accepting the opportunity, Ambassadors receive the incentive or free product and are required to publish an instant post to their social media platform. SAMY has coined this term, Instant-Incentive for Post or II4P. SAMY measures the same analytics for SamyGeo as SamyCreations and SAMYCamapigns to proivde the Brands and Ambassadors feedback on their results.
 
 ### SamyPR - Current State: Beta
 
 SamyPR is our public relations service to Brands. We gather specific information from the Brand and tailor a marketing plan unique to that Brand. We then use the SAMY services to implement the custom strategy while leveraging SAMY’s machine learning capabilities to optimize that strategy. The SAMY team has realized that although our platform is easy to use and straight forward, our team and SAMY is more knowledgeable and responsive to marketing changes. By using past SAMY Service data SAMY is also able to automatically create the most engaging opportunity for the Brand, whether that's a Creation, a Campaign or a Geo is left up to SAMY.
 
-## Guides
+## Guides - Soon
 
 The guides for each of the above services can be found in the resources section of the website. https://iamsamy.com/resources/
 
 ## Built With
 
 * [Ubuntu](https://www.ubuntu.com/) - 16.0.4 - The OS
-* [Django](https://www.djangoproject.com/) - 1.11.6 - The web framework used
+* [React](https://www.react.com/) - 15. - The frontend web "framework" used
 * [Python](https://www.python.org/download/releases/3.5.1/) - 3.5.1 - Programing Language
 * [Firebase](https://firebase.google.com/) - 4.6 - Realtime Database
 * [Firestore](https://firebase.google.com/docs/firestore/) - 4.6 - Realtime Big Data Database
 * [MongoDB](https://www.mongodb.com/) - 3.6 - Document Database
-* [Nginx](https://nginx.org/en/) - HTTP and reverse proxy server
+* [Nginx](https://nginx.org/en/) - Reverse proxy server
 * [Gunicorn](https://github.com/benoitc/gunicorn) - Python WSGI HTTP Server for UNIX
 * [Redis](https://redis.io/) - In-memory Data Structure Store
 * [Celery](https://github.com/celery/celery) - Distributed Task Queue
@@ -57,7 +59,7 @@ SAMY - v1
 
 ## Authors
 
-* **Denis Angell** - *Initial work* - [dangell7](https://github.com/dangell7)
+* **Denis Angell** - *Initial work* - [harpangell7](https://github.com/Harpangell7)
 
 ## Contributors
 

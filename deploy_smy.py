@@ -25,7 +25,7 @@ def deploy_samy(owner_address=None, owner_key=None):
 
         gas_price = w3.eth.gasPrice
         block = w3.eth.getBlock("latest")
-        gas_limit = block["gasLimit"]
+        gas_limit = block["gasLimit"] - 30000
 
         nonce = w3.eth.getTransactionCount(owner_address)
 
@@ -33,7 +33,8 @@ def deploy_samy(owner_address=None, owner_key=None):
             'nonce': nonce,
             'gasPrice': gas_price,
             'gas': gas_limit,
-            'chainId': None
+            #'chainId': None - SamyNet
+            'chainId': 3
         }
 
         transaction = samy_contract.constructor().buildTransaction(built_transaction)
@@ -43,6 +44,7 @@ def deploy_samy(owner_address=None, owner_key=None):
         tx_hex = Web3.toHex(signed.rawTransaction)
 
         tx_hash = w3.eth.sendRawTransaction(tx_hex)
+        print(Web3.toHex(tx_hash))
 
         while w3.eth.getTransactionReceipt(tx_hash) == None:
             time.sleep(5)
@@ -94,17 +96,36 @@ def check_samy(samy_token_address=None, address=None, name=None):
 # Change Samy Contract Status
 # TODO
 # [START Change Samy Contract Status]
-def change_status(smy_token_address=None, owner_address=None, owner_key=None, status=None):
+def check_status(smy_token_address=None, owner_address=None, owner_key=None):
 
     try:
 
-        if status == 'Active':
+        samy_token_contract_instance = w3.eth.contract(smy_token_address, abi=samy_contract_interface['abi'])
 
-            samy_token_contract_instance = w3.eth.contract(smy_token_address, abi=samy_contract_interface['abi'])
+        return samy_token_contract_instance.functions.isActive().call()
 
-            gas_price = w3.eth.gasPrice
+
+    except Exception as e:
+        print('Error Checking SMY Token Contract; Error: %s', e)
+
+# [END Change Samy Contract Status]
+
+# Change Samy Contract Status
+# TODO
+# [START Change Samy Contract Status]
+def change_status(smy_token_address=None, owner_address=None, owner_key=None):
+
+    try:
+
+        samy_token_contract_instance = w3.eth.contract(smy_token_address, abi=samy_contract_interface['abi'])
+
+        isActive = samy_token_contract_instance.functions.isActive().call()
+
+        if isActive == False:
+
+            gas_price = w3.eth.gasPrice * 2
             block = w3.eth.getBlock("latest")
-            gas_limit = block["gasLimit"]
+            gas_limit = block["gasLimit"] - 30000
 
             nonce = w3.eth.getTransactionCount(owner_address)
 
@@ -112,7 +133,7 @@ def change_status(smy_token_address=None, owner_address=None, owner_key=None, st
                 'nonce': nonce,
                 'gasPrice': gas_price,
                 'gas': gas_limit,
-                'chainId': None
+                'chainId': 3
             }
 
             transaction = samy_token_contract_instance.functions.start().buildTransaction(built_transaction)
@@ -122,6 +143,7 @@ def change_status(smy_token_address=None, owner_address=None, owner_key=None, st
             tx_hex = Web3.toHex(signed.rawTransaction)
 
             tx_hash = w3.eth.sendRawTransaction(tx_hex)
+            print(Web3.toHex(tx_hash))
 
             while w3.eth.getTransactionReceipt(tx_hash) == None:
                 time.sleep(5)
@@ -133,6 +155,5 @@ def change_status(smy_token_address=None, owner_address=None, owner_key=None, st
 
     except Exception as e:
         print('Error Checking SMY Token Contract; Error: %s', e)
-
 
 # [END Change Samy Contract Status]

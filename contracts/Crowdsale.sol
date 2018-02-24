@@ -48,6 +48,7 @@ contract Crowdsale is Ownable {
         require(_rate > 0);
         require(_token != address(0));
         require(_beneficiary != address(0));
+
         beneficiary = _beneficiary;
         fundingGoal = _fundingGoal;
         cap = _cap;
@@ -61,10 +62,6 @@ contract Crowdsale is Ownable {
         vault = new RefundVault(beneficiary);
     }
 
-    /**
-    * @dev Buys SMY tokens
-    * @param _to To address
-    */
     function buyTokens(address _to) public payable {
         require(_to != address(0));
         require(validPurchase());
@@ -80,9 +77,6 @@ contract Crowdsale is Ownable {
         forwardFunds();
     }
 
-    /**
-    * @dev Fallback function
-    */
     function () external payable {
         buyTokens(msg.sender);
     }
@@ -97,26 +91,16 @@ contract Crowdsale is Ownable {
         return weiAmount.mul(rate);
     }
 
-    /**
-    * @dev Forwards funds to beneficiary
-    */
     function forwardFunds() internal {
         vault.deposit.value(msg.value)(msg.sender);
     }
 
-
-    /**
-    * @dev Sends refunds to crowdfunders
-    */
     function sendRefunds() onlyOwner  public {
         require(isFinalized);
         require(!goalReached());
         vault.refund();
     }
 
-    /**
-    * @dev Finalizes Crowdsale
-    */
     function finalization() onlyOwner public {
 
         require(!isFinalized);
@@ -160,10 +144,8 @@ contract Crowdsale is Ownable {
 
     // @return true if the transaction can buy tokens
     function validPurchase() internal view returns (bool) {
-        bool withinPeriod = now >= startTime && now <= endTime;
         bool withinCap = weiAmountRaised.add(msg.value) <= cap;
         bool aboveMinimumPurchase = msg.value >= 10000000000000000;
-        return withinCap && aboveMinimumPurchase && withinPeriod;
+        return withinCap && aboveMinimumPurchase;
     }
 }
-

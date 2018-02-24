@@ -94,22 +94,24 @@ def check(address=None, name=None):
     balance = w3.eth.getBalance(address)
     balance = Web3.fromWei(balance, 'ether')
     print('%s Account Eth Balance: %s' % (name, balance))
+    return balance
 
 def send(user_address=None, owner_address=None, owner_key=None):
     try:
-        gas_price = w3.eth.gasPrice
+        gas_price = w3.eth.gasPrice * 2
         block = w3.eth.getBlock("latest")
-        gas_limit = block["gasLimit"]
+        gas_limit = block["gasLimit"] - 30000
 
         nonce = w3.eth.getTransactionCount(owner_address)
 
-        _value = Web3.toWei(1000, 'ether')
+        _value = Web3.toWei(.5, 'ether')
 
         transaction = {
             'nonce': nonce,
             'gasPrice': gas_price,
             'gas': gas_limit,
-            'chainId': None,
+            #'chainId': None,
+            'chainId': 3,
             'to': user_address,
             'value': _value
         }
@@ -120,6 +122,9 @@ def send(user_address=None, owner_address=None, owner_key=None):
 
         tx_hash = w3.eth.sendRawTransaction(tx_hex)
 
+        print(Web3.toHex(tx_hash))
+        startTime = time.time()
+
         while w3.eth.getTransactionReceipt(tx_hash) == None:
             time.sleep(5)
             print('Waiting on Tranasaction')
@@ -127,6 +132,8 @@ def send(user_address=None, owner_address=None, owner_key=None):
         tx_receipt = w3.eth.getTransactionReceipt(tx_hash)
 
         print(tx_receipt)
+
+        print('Elapsed Time: %s' % (int(time.time()) - int(startTime)))
 
     except Exception as e:
         print('Error Sending Transaction: %s' % e)
