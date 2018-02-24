@@ -1,12 +1,12 @@
 # SAMY Public Repository
 
-The public repository for SAMY. To view the application visit https://iamsamy.com. If you would like to contribute to this project please email denisangell@iamsamy.com.
+The public repository for SAMY. To view the application visit https://iamsamy.com. If you would like to contribute to this project please email support@iamsamy.com.
 
-SMY Token Ether Scan https://ropsten.etherscan.io/token/0x21c64552ec487bc3117562c96f306bb9f77a9dd3
+SMY Token Ether Scan: https://ropsten.etherscan.io/token/0x21c64552ec487bc3117562c96f306bb9f77a9dd3
 
 Crowdsale Ether Scan: https://ropsten.etherscan.io/address/0xc814f6AEc6769cB4DE212600Ed6C6F33cA8C85D4
 
-## Limited Offer!!! $100 bounty for finding errors in smart contracts.
+## Limited Offer!!! $50 bounty for finding errors in smart contracts.
 
 ### Eligible Contracts
 
@@ -59,7 +59,7 @@ SAMY - v1
 
 ## Authors
 
-* **Denis Angell** - *Initial work* - [harpangell7](https://github.com/Harpangell7)
+* **Denis Angell** - *Initial work* - [harpangell7](https://github.com/dangell7)
 
 ## Contributors
 
