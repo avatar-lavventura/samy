@@ -65,6 +65,7 @@ contract Crowdsale is Ownable {
     function buyTokens(address _to) public payable {
         require(_to != address(0));
         require(validPurchase());
+        require(!hasEnded());
 
         uint256 weiAmount = msg.value;
 
