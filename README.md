@@ -1,5 +1,3 @@
-## [![Live why](https://img.shields.io/badge/live-false%3F-brightgreen.svg?style=flat)](https://www.harpangell.com)
-
 # SAMY Public Repository
 
 Dear Viewers,
