@@ -1,6 +1,7 @@
 * Version: 2.0.0
 * Python: 3.5
-* OS: mac/linux/win
+* Web Browser: Chrome/Safari/IE/Firefox
+* DAPP Browser: Metamask/Cipher
 
 
 ### What was wrong?
